@@ -1,0 +1,68 @@
+[
+    {
+        "article_title": "Untitled",
+        "section": "そもそも「RAG」とは？",
+        "image_path": "images/rag.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "RAGのアーキテクチャ",
+        "image_path": "images/rag2.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "image_path": "images/rag3.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "image_path": "images/rag4.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "image_path": "images/rag5.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "image_path": "images/rag6.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "image_path": "images/rag7.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "構築のヒント",
+        "image_path": "images/rag8.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Langflowから作成したフローをWebウィジェット(HTML)に変換してみる",
+        "image_path": "images/rag9.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Langflowから作成したフローをWebウィジェット(HTML)に変換してみる",
+        "image_path": "images/rag10.png",
+        "caption": "No caption available"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Langflowから作成したフローをWebウィジェット(HTML)に変換してみる",
+        "image_path": "images/rag2.png",
+        "caption": "No caption available"
+    }
+]

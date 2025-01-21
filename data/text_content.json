@@ -1,0 +1,192 @@
+[
+    {
+        "article_title": "Untitled",
+        "section": "Main",
+        "text": "昨今、生成AIの進化に伴い、AIを組み込んだ「チャットボット」もノーコードで開発することが可能になりました。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Main",
+        "text": "LangChainのような大規模言語モデル（LLM）を扱うフレームワークが、開発プロセスを大幅に効率化してくれるようになりましたが、プログラミングが得意でない方々にとって、数百行に及ぶコードの管理はまだまだ大きな高いハードルですよね。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Main",
+        "text": "そこで有効なのが、 「Lang Flow」 というオープンソースのパッケージです。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Main",
+        "text": "本記事では、LangFlowを使って、わずか数分でRAGベースのAIチャットボットのプロトタイプを構築する方法を紹介します。また、構築したアプリケーションをローカルで動かしつつ、最小限のコーディングで、Webウィジット（HTML）へ変換する方法も合わせて探りました。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Main",
+        "text": "ノーコードでのAIチャットボット開発に興味のある方は、ぜひご覧ください。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Main",
+        "text": "そもそも「RAG」とは？RAGのアーキテクチャさっそく実験してみた前提LangFlowのインストール方法構築のヒントLangflowから作成したフローをWebウィジェット(HTML)に変換してみるまとめ"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "そもそも「RAG」とは？",
+        "text": "画像出典：https://www.ml6.eu/blogpost/leveraging-llms-on-your-domain-specific-knowledge-base"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "そもそも「RAG」とは？",
+        "text": "RAG(Retrieval-Augmented Generation)とは、自然言語処理（NLP）の技術手法の一つであり、情報検索とテキスト生成を組み合わせた新しいアプローチです。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "そもそも「RAG」とは？",
+        "text": "具体的には、大量のテキストデータ（PDFやJSONファイルなど）から必要な情報を検索モデルで抽出し、その情報を参考に生成AIが新たなテキストを作り出します。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "そもそも「RAG」とは？",
+        "text": "RAG技術は、FAQでの自動回答、記事の要約、データベースに基づく質問への対応といった多様な用途に利用されています。とくに、AIチャットボットのような情報の検索とテキストの生成が求められるタスクにおいて、その効果を十分に発揮します。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "RAGのアーキテクチャ",
+        "text": "画像出典：https://newsletter.nocode.ai/p/guide-retrieval-augmented-generationこちらの画像で説明されているように、RAGのアーキテクチャは通常、以下の8つのステップを含みます。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "RAGのアーキテクチャ",
+        "text": "ドキュメントの読み込み：最初に、文書やデータソースをロードします。チャンクへの分割： 文書を扱いやすいサイズに分割します。エンベディングの生成： 分割した各チャンクをエンベディングを使ってベクトル表現に変換します。ベクターデータベースへの保存： これらのベクトルをベクターデータベースに保存し、効率的に検索できるようにします。ユーザーとのインタラクション： ユーザーからのクエリや入力を受け取り、エンベディングに変換します。ベクターデータベースでのセマンティック検索： ユーザーのクエリに基づいてベクターデータベースでセマンティック検索を行います。レスポンスの取得と処理： 関連するレスポンスを取得し、それを大規模言語モデル（LLM）で処理して回答を生成します。ユーザーへの回答の提供： LLMによって生成された最終的な回答をユーザーに提示します。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "RAGのアーキテクチャ",
+        "text": "以前にPython言語でLangchain、StreamlitとChatGPTモデルを活用してRAGを作成しました。以下の記事で解説していますので、ぜひご覧ください。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "前提",
+        "text": "LangFlowを始める前に、まず作業環境端末にPythonがインストールされているかを確認しましょう。Pythonのバージョンは3.10以上で、3.12未満である必要があります。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "LangFlowのインストールが完了したら、以下のようにターミナルにlangflow runと入力します。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "次に、提供されたURL（例えば、上記の画像で示された http://127.0.0.1:7860）をコピーして、Webブラウザに貼り付けてください。そうすると、すぐにインターフェースが表示されます。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "このページにはプロジェクトがわかりやすく便利に表示されており、ナビゲーションが非常に簡単になっています。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "ページ上部のナビゲーションから「New Project」 をクリックしてスタートします。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "このプロジェクトでは、PDFファイルを読み取って、質問に答えるチャットボットを開発しています。前述で説明したRAGのアーキテクチャをもとに、このシステムを構築するために、いくつかの重要な要素を組み合わせる必要があります。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "左側のパネルには、さまざまなコンポーネントが並んでいます。これらの要素をシンプルにドラッグアンドドロップして、チャットボットのフローを構築していきます。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "PDFローダー：「PyPDFLoader」 から始めて、PDFドキュメントのファイルパスを入力します。テキスト分割器：「RecursiveCharacterTextSplitter」 を使用して、文字のリストによってパラメータ化されたテキストをチャンクに分割します。。テキスト埋め込みモデル： 堅牢でオープンソースの埋め込み用に 「OpenAIEmbeddings」 * を選択して、OpenAPIにあるに シークレットキー を設定します。ベクターデータベース：「FAISS」 を実装して、これらの埋め込みを保存し、ベクター検索を強化します。応答生成用LLM：「Chat OpenAI」 を選び、モデルは有料版の「gpt-4-1106-preview」選択して、OpenAPIにあるにシークレットキーを設定します。「GPT-3.5」と同等の無料版モデルも選択可能です。会話メモリ： 「ConversationBufferMemory」 を有効にしてチャット履歴を保持し、フォローアップの質問に対応します。会話取得チェーン：「ConversationRetrievalChain」 で全てをリンクし、一貫性のある応答システムを形成します。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "各コンポーネントをワークスペースにドラッグアンドドロップし、PDFのパスやLLMモデルなど、必要な設定を構成します。私の設定をコピーすることもできますが、もっと良いアイデアや最適化があれば自分の設定を行うこともできます。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "最後に、上の画像のように要素を組み合わせて、チャットボットのワークフローを確立しましょう。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "すべてが接続されたら、右下隅にある「雷」のボタンを押してフローをコンパイルします。成功すると、各カードのヘッダーにあるインジケーターが緑色に変わり、すべてが正常に動作していることを示します。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "フローのコンパイルが成功した後は、 「チャットボット」 アイコンをクリックして、作成したものをテストしてみましょう。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "LangFlowのインストール方法",
+        "text": "この画像からわかるように、このチャットボットは非常にうまく機能しており、コードを一切使わずにPDFファイルを読み取ってその評価をしてくれました！"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "構築のヒント",
+        "text": "1．フローが完成したら、サイドバーにあるJSONファイルとして保存するか、あとでアクセスしたり編集したりするために、アップロードすることも可能です。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "構築のヒント",
+        "text": "2．OpenAIの設定が適さない場合は、Ollamaのようなモデルを利用してRAGパイプラインを構築することも選択可能です。この機能を使用するために必要な要件がインストールされていることを確認してください。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Langflowから作成したフローをWebウィジェット(HTML)に変換してみる",
+        "text": "さきほどの手順でフローの設定が正しく完了したら、アプリケーションに統合します。フローを構築した後、LangFlowでは必要なコードスニペットを提供してくれます。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Langflowから作成したフローをWebウィジェット(HTML)に変換してみる",
+        "text": "新しいファイル（index.html）を作成するか、お好みに応じて（React、Next、Angular）などのフレームワークも使用できます。コードスニペットメニュー内で 「Chat Widget HTML」 タブに移動し、コードスニペットをコピーしてindex.htmlに貼り付けてください。HTMLのbodyタグ内に配置し、コードにスタイルを追加すればOKです。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Langflowから作成したフローをWebウィジェット(HTML)に変換してみる",
+        "text": "すべての準備が完了したら、ブラウザで動作を確認してみましょう。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Langflowから作成したフローをWebウィジェット(HTML)に変換してみる",
+        "text": "ヒント:LangFlowのコードをPythonなどの他の言語に適用し、StreamlitやDjangoなどに統合することも可能です。この柔軟性を活用して、さまざまなアプリケーションでLangFlowを使用してみてください。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "Langflowから作成したフローをWebウィジェット(HTML)に変換してみる",
+        "text": "さらにカスタマイズを進めたい方や詳しい情報が必要な方は、LangFlowの公式ドキュメントをぜひご覧ください。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "まとめ",
+        "text": "この記事では、賢いRAGベースのAIチャットボットを開発しました。ノーコードでRAGパイプラインを構築するためにLangFlowを利用して、ChatGPTモデルを活用して埋め込みとLLM処理をおこないました。アプリケーションをローカルでコストなしで開発できますし、AIチャットボットをWebウィジェットに変換することも可能です。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "まとめ",
+        "text": "LangFlowのノーコード方式は、AIアプリケーションの構築とプロトタイピングの方法を変革する可能性があると信じています。ただ、一部のコンポーネントはまだ開発中またはベータ版であり、期待通りに動作しない場合があります。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "まとめ",
+        "text": "また、こういった問題の原因やトラブルシューティングについてのサポート情報がまだまだ不十分です。さらなる改善として、よりカスタマイズを容易にするためにPythonコードを直接提供することも考えられるでしょう。"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "まとめ",
+        "text": "全体として、LangFlowは迅速なプロトタイピングに非常に価値のあるツールなので、ぜひ試してみてください！"
+    },
+    {
+        "article_title": "Untitled",
+        "section": "まとめ",
+        "text": "また、LIGでは生成AIコンサルティング事業をおこなっています。ぜひお気軽にご相談ください。"
+    }
+]
